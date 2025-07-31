@@ -22,11 +22,52 @@ npm install @opengis/form
 ### 2. Usage
 
 ```vue
-<DescriptionList :items title="Мій список"/>
+<template>
+  <VsForm
+    v-model:form="form"    
+    :schema="schema"
+    @handle-submit="handleSubmit"
+  />
+</template>
 
-<DescriptionList view='list'>
-  <DescriptionItem label="Автор" value="Користувач1"/>
-</DescriptionList>
+<script setup>
+  import { ref } from 'vue';
+  import { VsForm } from "@opengis/form";
+  
+  const form = ref({});
+  const formValues = ref({});
+
+  const schema = [
+    {
+      name: 'name',
+      type: 'text',
+      label: 'Full Name',
+      placeholder: 'Enter your full name',
+      rules: ['required'],
+    },
+    {
+      name: 'email',
+      type: 'text',
+      label: 'Email',
+      placeholder: 'Enter your email',
+      rules: ['required', 'email'],
+    },
+    {
+      name: 'country',
+      type: 'select',
+      label: 'Country',
+      options: [
+        { id: 'ua', text: 'Ukraine' },
+        { id: 'us', text: 'United States' },
+      ],
+      rules: ['required'],
+    },
+  ];
+
+  const handleSubmit = values => {
+    console.log('Form submitted:', values);
+  };
+</script>
 ```
 
 ## Contributions
